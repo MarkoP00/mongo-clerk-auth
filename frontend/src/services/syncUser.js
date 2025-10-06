@@ -3,8 +3,10 @@ import axios from "axios";
 
 const syncUser = async (token) => {
   try {
+    const baseURL = import.meta.env.VITE_API_URL;
+
     const response = await axios.post(
-      "http://localhost:8080/api/auth/clerk/register",
+      `${baseURL}/register`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },
