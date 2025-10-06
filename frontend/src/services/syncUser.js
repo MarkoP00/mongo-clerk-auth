@@ -6,7 +6,7 @@ const syncUser = async (token) => {
     const baseURL = import.meta.env.VITE_API_URL;
 
     const response = await axios.post(
-      `${baseURL}/register`,
+      `${baseURL}/clerk/register`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },
