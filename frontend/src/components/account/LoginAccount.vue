@@ -8,7 +8,7 @@
           <p>Please fill in the details to get started</p>
         </div>
         <div class="clerk-button-wrapper">
-          <ClerkButton :title="'Sign up with Google'"></ClerkButton>
+          <ClerkButton :title="'Sign up with Google or Git'"></ClerkButton>
         </div>
         <div class="separation-paragraph">
           <p>or</p>
@@ -40,7 +40,7 @@
         </div>
         <div class="links">
           <span>Dont have an account?</span>
-          <span @click="emits('show-register')">Sign In</span>
+          <span @click="emits('onShowRegister')">Sign In</span>
         </div>
       </form>
     </div>
@@ -59,12 +59,12 @@ import callToast from "../../services/callToast.js";
 import objectFormValidation from "../../services/objectFormValidation.js";
 import Spinner from "../global/Spinner.vue";
 
-const emits = defineEmits("show-register");
+const emits = defineEmits("onShowRegister");
 const { user } = useUser();
 const router = useRouter();
 
 const auth = useAuth();
-const signOut = () => auth.signOut.value();
+// const signOut = () => auth.signOut.value();
 
 const isLoading = ref(false);
 const baseURL = import.meta.env.VITE_API_URL;
@@ -111,9 +111,13 @@ async function loginUser() {
 const handleSync = async () => {
   if (!user.value || !auth.isSignedIn.value) return;
   const token = await auth.getToken.value();
+  const sessionId = auth.sessionId.value;
+
   try {
     isLoading.value = true;
     await syncUser(token);
+
+    localStorage.setItem("clerkSessionId", sessionId);
     router.push("/welcome");
   } catch (err) {
     console.error("Sync failed.");
@@ -125,7 +129,6 @@ const handleSync = async () => {
 
 watch(
   // if user signs with clerk, watch catch data, and fires handleSync() which will add user to mongo db
-
   () => auth.isSignedIn.value,
   (signedIn) => {
     if (signedIn) {
@@ -133,16 +136,6 @@ watch(
     }
   }
 );
-
-onMounted(async () => {
-  //this validation is if user manually types /register route. clerk must signout, otherwise, problems can be occured
-  const token = localStorage.getItem("token");
-  if (token) {
-    await signOut();
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-  }
-});
 </script>
 
 <style scoped src="../account/authForm.css"></style>

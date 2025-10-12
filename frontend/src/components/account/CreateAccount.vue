@@ -52,7 +52,7 @@
         </div>
         <div class="links">
           <span>Already have account?</span>
-          <span @click="emits('show-login')">SignUp</span>
+          <span @click="emits('onShowLogin')">SignUp</span>
         </div>
       </form>
     </div>
@@ -71,7 +71,7 @@ import callToast from "../../services/callToast.js";
 import objectFormValidation from "../../services/objectFormValidation.js";
 import Spinner from "../global/Spinner.vue";
 
-const emits = defineEmits(["show-login"]);
+const emits = defineEmits(["onShowLogin"]);
 const { user } = useUser();
 
 const router = useRouter();
@@ -155,17 +155,17 @@ watch(
   }
 );
 
-onMounted(async () => {
-  // this validation is if user manually types /register /login route. clerk must signout, otherwise, problems can be occured
+// onMounted(async () => {
+//   // this validation is if user manually types /register /login route. clerk must signout, otherwise, problems can be occured
 
-  const token = localStorage.getItem("token");
+//   const token = localStorage.getItem("token");
 
-  if (token) {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    return await signOut();
-  }
-});
+//   if (token) {
+//     localStorage.removeItem("token");
+//     localStorage.removeItem("user");
+//     return await signOut();
+//   }
+// });
 </script>
 
 <style scoped src="../account/authForm.css"></style>

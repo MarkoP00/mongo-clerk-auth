@@ -27,8 +27,8 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const { user } = useUser();
 
-const token = ref(localStorage.getItem("token"));
-const manualUser = ref(JSON.parse(localStorage.getItem("user")));
+const token = ref(localStorage?.getItem("token"));
+const manualUser = ref(JSON.parse(localStorage?.getItem("user")));
 
 const isClerkUser = computed(() => !!user.value);
 const displayName = computed(

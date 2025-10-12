@@ -1,6 +1,9 @@
 <template>
-  <LoginAccount v-if="loginVisible" @show-register="toggleForms"></LoginAccount>
-  <CreateAccount v-else @show-login="toggleForms"></CreateAccount>
+  <LoginAccount
+    v-if="loginVisible"
+    @onShowRegister="toggleForms"
+  ></LoginAccount>
+  <CreateAccount v-else @onShowLogin="toggleForms"></CreateAccount>
 </template>
 
 <script setup>

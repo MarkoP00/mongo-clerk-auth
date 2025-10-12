@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
 import verifyToken from "./services/verifyToken";
+import logoutUser from "./services/logoutUser";
 import WelcomePage from "./pages/WelcomePage.vue";
 import RegisterPage from "./pages/RegisterPage.vue";
 
@@ -18,8 +19,15 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   if (to.path === "/welcome") {
     const tokenIsValid = await verifyToken();
+    if (!tokenIsValid) {
+      await logoutUser();
+      return next("/register");
+    }
+  }
 
-    if (!tokenIsValid) return next("/register");
+  if (to.path === "/register" || to.path === "/") {
+    // always logout if trying to go to /register
+    await logoutUser();
   }
 
   next();
