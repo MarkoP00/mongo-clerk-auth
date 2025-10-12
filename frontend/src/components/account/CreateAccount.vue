@@ -52,7 +52,7 @@
         </div>
         <div class="links">
           <span>Already have account?</span>
-          <span @click="emits('onShowLogin')">SignUp</span>
+          <span @click="emits('onShowLogin')">Sign Up</span>
         </div>
       </form>
     </div>

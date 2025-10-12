@@ -8,7 +8,7 @@
           <p>Please fill in the details to get started</p>
         </div>
         <div class="clerk-button-wrapper">
-          <ClerkButton :title="'Sign up with Google or Git'"></ClerkButton>
+          <ClerkButton :title="'Sign in with Google or Git'"></ClerkButton>
         </div>
         <div class="separation-paragraph">
           <p>or</p>
